@@ -1,0 +1,221 @@
+@import url('https://fonts.gooleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=saw');
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #35052e;
+}
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /**Sarmal yapmak**/
+    padding: 40px 0;
+}
+
+
+.container .box{
+    position: relative;
+    width: 320px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 30px;
+    transition: 0.5s;
+}
+
+
+.container .box::before{  /**box açıyoruz**/
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg); /**sola doğru box'ı eğiyor*/
+    transition: 0.5s;
+}
+
+.container .box::after{ /**açtığımız eğik boxları içten papyon şekline getirir*//
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    transform: skewX(15deg); /**sola doğru box'ı eğiyor mouse üzerinde tuttukmu şekil oynuyor*/
+    transition: 0.5s;
+    filter: blur(30px);
+    transition: 0.5s;
+}
+
+
+.container .box:hover:before,
+.container .box:hover:after{
+    transform: skewX(0deg); /**Açtığımız box'ı hareket ettiriyoruz mouse üzerine gelince**/
+    left: 20px;
+    width: calc(100% - 90px); /**Kartların üzerine gelince hareket ederken içten genişleme yapar**/
+
+}
+
+.container .box:nth-child(1):before,  /**Kart bir'e renk verdik  karışık**/
+.container .box:nth-child(1):after{
+    background: linear-gradient(315deg,#ffbc00,#1609cf);
+}
+
+.container .box:nth-child(2):before, /**Kart iki'e renk verdik karışık**/
+.container .box:nth-child(2):after{
+    background: linear-gradient(315deg,#ce0303,#ffffff);
+}
+
+.container .box:nth-child(3):before, /**Kart üç'e renk verdik  karışık**/
+.container .box:nth-child(3):after{
+    background: linear-gradient(315deg,#4dff03,#00d0ff);
+}
+
+.container .box span{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index:50;
+    pointer-events: none;
+}
+
+.container .box span::before{ /**Açtığımız hareket eden boxların arkasına Card açıyor blur olarak!**/
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px); /**Görseli buğulu yapıyor**/
+    opacity: 0; /**Bununla ise buğulu yaptığımız Card'ları saydamlaştırıyoruz**/
+    transition: 0.5s;
+    animation:animate 2s linear infinite;
+    box-shadow: 0 5px 15px rgb(0, 0, 0, 0.05);
+
+}
+
+.container .box:hover span::before{ /**Bununla ise boxlarımızın üzerine mause ile geldik mi hareket eden boxlarımızın en üstünde minik bir kare box oluşuyor şeffaf**/
+    top: -50px;
+    left: 50px;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+}
+
+.container .box span::after{ /**hareket eden kartların arkasına daha gözle görülür Kart ekliyoruz**/
+    content: '';
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: 0.5s;
+    animation:animate 2s linear infinite;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    animation-delay: -1s;
+
+}
+
+.container .box:hover span::after{ /** ve ardından bu kodla ise az önce box'ın yukarısına hareket eden küçük kare box gibi bu sefer alt kısıma yapıyoruz**/
+    bottom: -50px;
+    right: 50px;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+}
+
+
+@keyframes animate /**Bu kodlama sayesinde Box'ın üstüne ve altına verdiğimiz minik kare kartları hafif aşağı yukarı hareket edecektir**/
+{
+    0%,100%
+    {
+        transform:translateY(10px);
+    }
+    50%
+    {
+        transform:translateY(-10px);
+    }
+}
+
+.container .box .content{
+    /**Bu iki kodla arkada kalan yazıları kartların ve box'ın önüne alıyoruz**/
+    position: relative;
+    left: 0;
+
+    /**bu iki kod sayesinde öne gelen yazıların hepsini şeffaf bir kare içine alıyoruz**/
+    padding: 20px 40px;
+    background: rgba(255, 255, 255, 0.05);
+
+    /**Bu iki kod sayesinde gölgede kalan kutulara hafif koyuluk veriyorz ve border-radious ile de kenar köşelerini şekillendiriyoruz**/
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    /**Bu kodla ise tam ortasından arkada kalan renkli boxların gölgesini geçiriyoruz renki olarak**/
+    backdrop-filter: blur(10px); 
+    z-index: 1;
+
+    /**Bu kodlama ile ise öne çıkan kare şeffaf box içinde yazı olan hareket halindeyken saydamlaşıyor ve yazıları beyaz yapmış oluyoruz**/
+    transform: 0.5s;
+    color: #fff;
+}
+
+.container .box:hover .content{ /**Bu kodlarla ise yazıları içine alan öne çıkan kartlar mouse üzerine gelince büyüyor!**/
+    left: -25px;
+    padding: 60px 40px;
+}
+
+.container .box .content h2{
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 10px;
+    ;
+}
+
+.container.box .content p{
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    line-height: 1.4em;
+}
+
+.container .box .content a{
+    display: inline-block;
+    font-size: 1.1em;
+    color: #111;
+    background: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 5px;
+}
